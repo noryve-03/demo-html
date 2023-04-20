@@ -23,6 +23,7 @@
       var host = "cpsc484-02.yale.internal:8888";
       
       $(document).ready(function() {
+        PLAYING = false; 
           frames.start();
           twod.start();
       });
@@ -50,11 +51,12 @@
             // Insert code so that by default, the screen shows a message 
             
             // draw the camera on the top of the screen
-            drawEnv(ctx, origin);
-
+            drawIntro(ctx, origin);
             // draw each person as a circle
+
             var i = 0;
             if (data.people) {
+              ctx.clearRect(0, 0, c.width, c.height);
               var num_people = Object.keys(data.people).length;
               $('.people_counter').text(`I see ${num_people} people`);
               console.log(num_people);
@@ -67,6 +69,12 @@
                 $('.error-ctx').hide();
                         }, 5000); 
               } 
+              [idx, person] =  Object.entries(data.peope)[0]; 
+              if(person.joints[8].position.y < person.joints[3]){
+                // If arm is raised 
+                  PLAYING = true; 
+              }
+              if(PLAYING == true){
               for (const [idx, person] of Object.entries(data.people)) {
                 // we want the data on the x,z plane from the camera's frame, so use indicies and 0 (x), 2 (Z)
                 // see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#arcs
@@ -119,6 +127,7 @@
                 }
               }
             }
+            }
           }
         }
       };
@@ -165,7 +174,15 @@
         tc = tc.spin(360 / parts);
         colors.push('#' + tc.toHex());
       }
-
+      function drawIntro(ctx, origin){
+        ctx.strokeStyle = "blue"; 
+        ctx.fillStyle = 'white';
+        ctx.font = "25px Calibri";
+        ctx.fillRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight); 
+        ctx.fillStyle = 'red';
+        ctx.fillText("Hey, wanna play a cool game? Raise your hand and start", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight/2);
+        
+      }
       // Draw the environment
       function drawEnv(ctx, origin) {
         ctx.strokeStyle = "#333333";

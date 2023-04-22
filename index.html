@@ -13,6 +13,7 @@
     <div style="width:100%; text-align:center;">
       <canvas id="draw" height="500" width="1000" style="border: 1px solid #111111; margin: auto"/>
     </div>
+    <div id="errors"></div>
     <img class="twod"/>
     <div class="people_counter"></div>
     <div id="countdown"></div>
@@ -51,12 +52,16 @@
             drawEnv(ctx, origin);
 
             // draw each person as a circle
-            var i = 0;
+            var num_people_raised = 0;
             if (data.people) {
               var num_people = Object.keys(data.people).length;
               $('.people_counter').text(`I see ${num_people} people`);
+              if (num_people > 1){
+                document.getElementById("errors").innerHTML = "Please only one player in front of the screen";
+              }
               //console.log(num_people);
               for (const [idx, person] of Object.entries(data.people)) {
+                var hand_raised = 0;
                 // we want the data on the x,z plane from the camera's frame, so use indicies and 0 (x), 2 (Z)
                 // see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#arcs
                 // function definition is: arc(x, y, radius, startAngle, endAngle, counterclockwise)
@@ -69,20 +74,22 @@
                 }
 
                 // Helper Function to check whether hand is raised above neck
-                function handRaised(left){
-                  if((person.joints[14].position.y <= person.joints[3].position.y) || (person.joints[7].position.y <= person.joints[3].position.y)){
-                    if (left == true){
-                      ctx.fillStyle = 'green';
-                      ctx.fillRect(0, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
-                    }
-                    else if (left == false){
-                      ctx.fillStyle = 'green';
-                      ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
-                    }
+                // function handRaised(left){
+                //   if((person.joints[14].position.y <= person.joints[3].position.y) || (person.joints[7].position.y <= person.joints[3].position.y)){
+                //     if (left == true){
+                //       ctx.fillStyle = 'green';
+                //       ctx.fillRect(0, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
+                //     }
+                //     else if (left == false){
+                //       ctx.fillStyle = 'green';
+                //       ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
+                //     }
                     
-                  }
-                }
-                if(person.x_pos < 0){
+                //   }
+                // }
+                // if(person.x_pos < 0){
+                // If person's left hand is raised above left eye, shade left side grey
+                if (person.joints[7].position.y <= person.joints[28].position.y) { 
                   // Here, the person is standing on the left 
                   POSITION = "left" ;
                   ctx.fillStyle = 'grey';
@@ -96,10 +103,14 @@
                   ctx.fillStyle = "#FFFFFF";
                   ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
 
-                  handRaised(true);
+                  hand_raised = 1;
+                  // handRaised(true);
                   
                   // startCountdown(5);
-                } else{
+                } 
+                // else if (person.x_pos >= 0){
+                // Else if person's right hand is raised above right eye, shade right side grey
+                else if (person.joints[14].position.y <= person.joints[30].position.y) {
                   POSITION = "right"; 
                   ctx.fillStyle = 'grey';
                   ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
@@ -112,7 +123,8 @@
                   ctx.fillStyle = "#FFFFFF";
                   ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
 
-                  handRaised(false);
+                  hand_raised = 1;
+                  // handRaised(false);
                   
                 }
                 $('.people_counter').text(`The person is at the ${POSITION} of the screen`);
@@ -186,10 +198,6 @@
       function drawEnv(ctx, origin) {
         ctx.strokeStyle = "#333333";
 
-        // ctx.fillStyle = '#FFFFFF';
-        // ctx.fillRect(0, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
-        // ctx.fillStyle = '#FFFFFF';
-        // ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight)
         ctx.fillStyle = '#333333';
         ctx.fillRect(ctx.canvas.clientWidth*2/5, 0, ctx.canvas.clientWidth/5, ctx.canvas.clientHeight/6);
 

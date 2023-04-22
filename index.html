@@ -13,7 +13,11 @@
     <div style="width:100%; text-align:center;">
       <canvas id="draw" height="500" width="1000" style="border: 1px solid #111111; margin: auto"/>
     </div>
-    <div id="errors"></div>
+    <div id="errors">
+      <div id="too_many_people"></div>
+      <div id="too_many_hands"></div>
+    </div>
+    <div id="num_raised"></div>
     <img class="twod"/>
     <div class="people_counter"></div>
     <div id="countdown"></div>
@@ -26,6 +30,8 @@
           frames.start();
           twod.start();
       });
+
+      var num_people_raised = 0;
 
       var frames = {
         socket: null,
@@ -52,13 +58,12 @@
             drawEnv(ctx, origin);
 
             // draw each person as a circle
-            var num_people_raised = 0;
             if (data.people) {
               var num_people = Object.keys(data.people).length;
               $('.people_counter').text(`I see ${num_people} people`);
-              if (num_people > 1){
-                document.getElementById("errors").innerHTML = "Please only one player in front of the screen";
-              }
+              // if (num_people > 1){
+              //   document.getElementById("errors").innerHTML = "Please only one player in front of the screen";
+              // }
               //console.log(num_people);
               for (const [idx, person] of Object.entries(data.people)) {
                 var hand_raised = 0;
@@ -73,23 +78,13 @@
                   RIGHT: "right"
                 }
 
-                // Helper Function to check whether hand is raised above neck
-                // function handRaised(left){
-                //   if((person.joints[14].position.y <= person.joints[3].position.y) || (person.joints[7].position.y <= person.joints[3].position.y)){
-                //     if (left == true){
-                //       ctx.fillStyle = 'green';
-                //       ctx.fillRect(0, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
-                //     }
-                //     else if (left == false){
-                //       ctx.fillStyle = 'green';
-                //       ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
-                //     }
-                    
-                //   }
-                // }
-                // if(person.x_pos < 0){
-                // If person's left hand is raised above left eye, shade left side grey
-                if (person.joints[7].position.y <= person.joints[28].position.y) { 
+                
+                // If a person is raising both hands, give error message to raise only one hand
+                if (person.joints[7].position.y <= person.joints[28].position.y && person.joints[14].position.y <= person.joints[30].position.y) {
+                  document.getElementById("too_many_hands").innerHTML = "Please raise only one hand";
+                }
+                // If only person's left hand is raised above left eye, shade left side grey
+                else if (person.joints[7].position.y <= person.joints[28].position.y && person.joints[14].position.y > person.joints[30].position.y) { 
                   // Here, the person is standing on the left 
                   POSITION = "left" ;
                   ctx.fillStyle = 'grey';
@@ -104,13 +99,12 @@
                   ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
 
                   hand_raised = 1;
-                  // handRaised(true);
                   
                   // startCountdown(5);
+                  document.getElementById("too_many_hands").innerHTML = "";
                 } 
-                // else if (person.x_pos >= 0){
-                // Else if person's right hand is raised above right eye, shade right side grey
-                else if (person.joints[14].position.y <= person.joints[30].position.y) {
+                // Else if only person's right hand is raised above right eye, shade right side grey
+                else if (person.joints[14].position.y <= person.joints[30].position.y && person.joints[7].position.y > person.joints[28].position.y) {
                   POSITION = "right"; 
                   ctx.fillStyle = 'grey';
                   ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
@@ -124,12 +118,21 @@
                   ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
 
                   hand_raised = 1;
-                  // handRaised(false);
                   
+                  document.getElementById("too_many_hands").innerHTML = "";
                 }
                 $('.people_counter').text(`The person is at the ${POSITION} of the screen`);
+                num_people_raised += hand_raised;
+              }
+              if (num_people_raised > 1){
+                document.getElementById("too_many_people").innerHTML = "Please only one player raising their hand in front of the screen";
+              }
+              else {
+                document.getElementById("too_many_people").innerHTML = "";
               }
             }
+            document.getElementById("num_raised").innerHTML = num_people_raised;
+            num_people_raised = 0;
           }
         }
       };

@@ -21,7 +21,7 @@
     <img class="twod"/>
     <div class = "people_counter"></div>
     <div class = "error-ctx"></div>
-    <div id="countdown"></div>
+    <div class="countdown"> One </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -32,7 +32,8 @@
           frames.start();
           twod.start();
       });
-
+      var RAISED = false;
+      var timer = 0; 
       var num_people_raised = 0;
 
       var frames = {
@@ -93,35 +94,97 @@
                 // If only person's left hand is raised above left eye, shade left side grey
                 else if (person.joints[7].position.y <= person.joints[28].position.y && person.joints[14].position.y > person.joints[30].position.y) { 
                   // Here, the person is standing on the left 
-                  // POSITION = "left" ;
-                  var ct1 = parseInt(localStorage.getItem("value1"));
-                  ct1++;
-                  localStorage.setItem("value1", ct1.toString());
+                  POSITION = "left" ;
+                  // if(num_people_raised == 0){
+                  //   RAISED = false 
+                  // }
+                  if(RAISED == false){
+                    // FIrst occurence of this happening 
+                    timer = Date.now();
+                  }
+                  RAISED = true;
+                  var time_left = (Date.now()/1000) - (Math.floor(timer/1000)); 
                   ctx.fillStyle = 'grey';
                   ctx.fillRect(0, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
-                  
-                  drawEnv(ctx, origin);
+                  ctx.arc(ctx.canvas.clientWidth/2, 200, 50,0, 2 * Math.PI); 
+                  ctx.fillStyle = '#333333';
+                  ctx.fillRect(ctx.canvas.clientWidth*2/5, 0, ctx.canvas.clientWidth/5, ctx.canvas.clientHeight/6);
 
+                  ctx.font = "25px Calibri";
+                  time_left = 5 - Math.floor(time_left);
+                  if(time_left >=0){ctx.fillText(time_left.toString(), ctx.canvas.clientWidth/2, 200);}
+                  ctx.fillText("Option 1", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4.5/8);
+                  ctx.fillText("Option 2", ctx.canvas.clientWidth*7/10, ctx.canvas.clientHeight*4.5/8);
+                  ctx.fillStyle = "#FFFFFF";
+                  ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
+                  // console.log((Date.now()/1000) - (Math.floor(timer/1000)) );
                   hand_raised = 1;
+                  
+                  $('.countdown').text(`${5 - Math.floor(time_left)} seconds left`); 
+                  if((Date.now()/1000) - (Math.floor(timer/1000) ) >= 5){
+                      // 5 Seconds elapsed 
+                      console.log("5 seconds");
+                  $('.countdown').text("Done!");
+                  ctx.fillStyle = 'green';
+                  ctx.fillRect(0, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
+                  ctx.fillStyle = '#333333';
+                  ctx.fillRect(ctx.canvas.clientWidth*2/5, 0, ctx.canvas.clientWidth/5, ctx.canvas.clientHeight/6);
+
+                  ctx.font = "25px Calibri";
+                  ctx.fillText("Option 1", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4.5/8);
+                  ctx.fillText("Option 2", ctx.canvas.clientWidth*7/10, ctx.canvas.clientHeight*4.5/8);
+                  ctx.fillStyle = "#FFFFFF";
+                  ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
+
+                  
+                  }
                   
                   // startCountdown(5);
                   document.getElementById("too_many_hands").innerHTML = "";
                 } 
                 // Else if only person's right hand is raised above right eye, shade right side grey
                 else if (person.joints[14].position.y <= person.joints[30].position.y && person.joints[7].position.y > person.joints[28].position.y) {
-                  // POSITION = "right"; 
-                  var ct2 = parseInt(localStorage.getItem("value2"));
-                  ct2++;
-                  localStorage.setItem("value2", ct2.toString());
+                  POSITION = "right"; 
+                  // if(num_people_raised == 0){
+                  //   RAISED = false 
+                  // }
+                  if(RAISED == false){
+                    // FIrst occurence of this happening 
+                    timer = Date.now();
+                  }
+                  RAISED = true;
+                  var time_left = (Date.now()/1000) - (Math.floor(timer/1000)); 
                   ctx.fillStyle = 'grey';
+                  time_left = 5 - Math.floor(time_left);
                   ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
+                  ctx.fillStyle = '#333333';
+                  ctx.arc(ctx.canvas.clientWidth/2, 200, 50,0, 2 * Math.PI); 
                   
-                  drawEnv(ctx, origin);
-                  
+                  ctx.fillRect(ctx.canvas.clientWidth*2/5, 0, ctx.canvas.clientWidth/5, ctx.canvas.clientHeight/6);
 
+                  ctx.font = "25px Calibri";
+                  if(time_left >=0){ctx.fillText(time_left.toString(), ctx.canvas.clientWidth/2, 200);}
+                  ctx.fillText("Option 1", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4.5/8);
+                  ctx.fillText("Option 2", ctx.canvas.clientWidth*7/10, ctx.canvas.clientHeight*4.5/8);
+                  ctx.fillStyle = "#FFFFFF";
+                  ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
                   hand_raised = 1;
-                  
+                  // console.log((Date.now()/1000) - (Math.floor(timer/1000)) );
+                  if((Date.now()/1000) - (Math.floor(timer/1000) ) >= 5){
+                      // 5 Seconds elapsed 
+                      console.log("5 seconds");
+                  ctx.fillStyle = 'green';
+                  ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
+                  ctx.fillStyle = '#333333';
+                  ctx.fillRect(ctx.canvas.clientWidth*2/5, 0, ctx.canvas.clientWidth/5, ctx.canvas.clientHeight/6);
+
+                  ctx.font = "25px Calibri";
+                  ctx.fillText("Option 1", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4.5/8);
+                  ctx.fillText("Option 2", ctx.canvas.clientWidth*7/10, ctx.canvas.clientHeight*4.5/8);
+                  ctx.fillStyle = "#FFFFFF";
+                  ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
                   document.getElementById("too_many_hands").innerHTML = "";
+                }
                 }
                 // $('.people_counter').text(`The person is at the ${POSITION} of the screen`);
                 num_people_raised += hand_raised;
@@ -216,7 +279,7 @@
         
       }
       // Draw the environment
-      function drawEnv(ctx, origin) {
+      function drawEnv(ctx, origin, time) {
         ctx.strokeStyle = "#333333";
 
         // middle line

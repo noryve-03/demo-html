@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Score</title>
+    <style>
+        .people_counter {
+          text-align:center;
+        }
+    </style>
+  </head>
+  <body>
+    <div style="width:100%; text-align:center;">
+      <canvas id="draw" height="500" width="1000" style="border: 1px solid #111111; margin: auto"/>
+    </div>
+    <div id="errors">
+      <div id="too_many_people"></div>
+      <div id="too_many_hands"></div>
+    </div>
+    <div id="num_raised"></div>
+    <img class="twod"/>
+    <div class="people_counter"></div>
+    <div id="countdown"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var host = "cpsc484-02.yale.internal:8888";
+      
+      $(document).ready(function() {
+          frames.start();
+          twod.start();
+      });
+
+      var num_people_raised = 0;
+
+      var frames = {
+        socket: null,
+
+        start: function() {
+          var url = "ws://" + host + "/frames";
+
+          var leftCt = 0;
+          var rightCt = 0;
+
+          // canvas object
+          var c = document.getElementById("draw");
+          var ctx = c.getContext("2d");
+          var origin = [c.width/2, 0];
+
+          // subscribe to the /frames data
+          frames.socket = new WebSocket(url);
+          frames.socket.onmessage = function(event) {
+            let data = JSON.parse(event.data);
+            // clear the canvas
+            ctx.clearRect(0, 0, c.width, c.height);
+
+            // draw the camera on the top of the screen
+            drawEnv(ctx, origin);
+            var values = [10, 100]; // dummy values
+            drawBars(ctx, values);
+          }
+        }
+      };
+
+      var twod = {
+        socket: null,
+
+        // create a connection to the camera feed
+        start: function () {
+            var url = "ws://" + host + "/twod";
+            twod.socket = new WebSocket(url);
+
+            // whenever a new frame is received...
+            twod.socket.onmessage = function (event) {
+
+                // parse and show the raw data
+                twod.show(JSON.parse(event.data));
+            }
+        },
+
+        // show the image by adjusting the source attribute of the HTML img object previously created
+        show: function (twod) {
+            $('img.twod').attr("src", 'data:image/pnjpegg;base64,' + twod.src);
+        },
+      };
+
+
+      // Helper Functions
+
+      // Countdown
+      // function startCountdown(seconds) {
+      //   let counter = seconds;
+      //   ctx.fillText(counter, ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/2);
+          
+      //   const interval = setInterval(() => {
+      //     console.log(counter);
+      //     counter--;
+
+      //     if (counter < 0 ) {
+      //       clearInterval(interval);
+      //     }
+      //   }, 1000);
+      // }
+
+      // Setup an array of colors
+      var tc = tinycolor({
+        r: Math.floor(Math.random() * 0xFF),
+        g: Math.floor(Math.random() * 0xFF),
+        b: Math.floor(Math.random() * 0xFF)
+      });
+      colors = [];
+      var parts = 2 + Math.floor(Math.random() * 5);
+      for (var i = 0; i < parts; i++) {
+        tc = tc.spin(360 / parts);
+        colors.push('#' + tc.toHex());
+      }
+
+      function drawBars(ctx, values) {
+        var barIndex = 0;
+        var height = ctx.canvas.clientHeight;
+        var barHeight = height/2;
+        var width = ctx.canvas.clientWidth;
+        var barSize = ctx.canvas.clientWidth / 4;
+        var sum = values[0] + values[1];
+
+        ctx.font = "40px Calibri";
+        ctx.fillStyle = "#67b6c7";
+        ctx.fillRect(width/5, height - Math.round((barHeight * values[0]) / sum), barSize, Math.round((barHeight * values[0]) / sum));
+        ctx.fillText(values[0], width*3/10, 19*height/20 - Math.round((barHeight * values[0]) / sum));
+
+        ctx.fillStyle = "#013220";
+        ctx.fillRect(width/2, height - Math.round((barHeight * values[1]) / sum), barSize, Math.round((barHeight * values[1]) / sum));
+        ctx.fillText(values[1], width*3/5, 19*height/20 - Math.round((barHeight * values[1]) / sum));
+
+        ctx.font = "30px Calibri";
+        if (values[1] > values[0]) {
+          ctx.fillStyle = "#013220";
+          ctx.fillText("Option 2 is in the lead!", width/3, height*1.5/5);
+        }
+        else if (values[1] < values[0]) {
+          ctx.fillStyle = "#67b6c7";
+          ctx.fillText("Option 1 is in the lead!", width/3, height*1.5/5);
+        }
+        else {
+          ctx.fillStyle = "#FF0000";
+          ctx.fillText("Options 1 and 2 are tied!", width/3, height*1.5/5);
+        }
+        ctx.font = "20px Calibri";
+        ctx.fillStyle = "#000000"
+        ctx.fillText("Raise your hand for 5 seconds to move to the next slide...", width*5.3/10, height/15);
+      }
+
+      // Draw the environment
+      function drawEnv(ctx, origin) {
+        ctx.strokeStyle = "#333333";
+      }
+    </script>
+  </body>
+</html>

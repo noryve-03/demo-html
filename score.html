@@ -56,7 +56,7 @@
 
             // draw the camera on the top of the screen
             drawEnv(ctx, origin);
-            var values = [10, 100]; // dummy values
+            var values = [parseInt(localStorage.getItem("value1")), parseInt(localStorage.getItem("value2"))];
             drawBars(ctx, values);
           }
         }

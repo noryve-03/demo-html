@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Upvote</title>
+    <title>Score</title>
     <style>
         .people_counter {
           text-align:center;
@@ -135,19 +135,19 @@
         ctx.font = "30px Calibri";
         if (values[1] > values[0]) {
           ctx.fillStyle = "#013220";
-          ctx.fillText("Option 2 is in the lead!", width/3, height/5);
+          ctx.fillText("Option 2 is in the lead!", width/3, height*1.5/5);
         }
         else if (values[1] < values[0]) {
           ctx.fillStyle = "#67b6c7";
-          ctx.fillText("Option 1 is in the lead!", width/3, height/5);
+          ctx.fillText("Option 1 is in the lead!", width/3, height*1.5/5);
         }
         else {
           ctx.fillStyle = "#FF0000";
-          ctx.fillText("Options 1 and 2 are tied!", width/3, height/5);
+          ctx.fillText("Options 1 and 2 are tied!", width/3, height*1.5/5);
         }
         ctx.font = "20px Calibri";
         ctx.fillStyle = "#000000"
-        ctx.fillText("Raise your hand for 5 seconds to move on.", width/30, height/15);
+        ctx.fillText("Raise your hand for 5 seconds to move to the next slide...", width*5.3/10, height/15);
       }
 
       // Draw the environment

@@ -41,9 +41,6 @@
           // canvas object
           var c = document.getElementById("draw");
           var ctx = c.getContext("2d");
-          // all real-world units are in mm unless denoted by CM
-          var personRadiusCM = 30;
-          // origin (x,y)
           var origin = [c.width/2, 0];
 
           // subscribe to the /frames data
@@ -66,34 +63,16 @@
               
               for (const [idx, person] of Object.entries(data.people)) {
                 var hand_raised = 0;
-                // we want the data on the x,z plane from the camera's frame, so use indicies and 0 (x), 2 (Z)
-                // see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#arcs
-                // function definition is: arc(x, y, radius, startAngle, endAngle, counterclockwise)
                 ctx.strokeStyle = ctx.fillStyle = colors[i++];
                 ctx.beginPath();
-                // Code to detect where the person is, relative to the middle of the display 
-                // const POSITIONS = {
-                //   LEFT : "left",
-                //   RIGHT: "right"
-                // }
-
                 
-                // If a person is raising both hands, move to next screen after countdown
+                // If a person is raising both hands, move to next screen
                 if (person.joints[7].position.y <= person.joints[28].position.y && person.joints[14].position.y <= person.joints[30].position.y) {
                   hand_raised += 1;
                 }
-                
-                // $('.people_counter').text(`The person is at the ${POSITION} of the screen`);
                 num_people_raised += hand_raised;
               }
-              if (num_people_raised > 1){
-                document.getElementById("too_many_people").innerHTML = "Please only one player raising their hands in front of the screen";
-                
-                ctx.fillStyle = 'red';
-                ctx.font = "25px Calibri";
-                ctx.fillText("Too many people raising their hands in front of the screen", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*7/8);
-              }
-              else if (num_people_raised == 1) {
+              if (num_people_raised == 1) {
                 window.location.href = "index.html";
               }
               else {
@@ -155,14 +134,9 @@
         ctx.font = "25px Calibri";
         ctx.fillText("Upvote one of the 2 options and see how other Yalies voted!", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4/8);
         ctx.fillText("Raise both hands for 5 seconds to start!", ctx.canvas.clientWidth*2.5/8, ctx.canvas.clientHeight*4.5/8);
-        // ctx.fillText("Upvote one of the 2 options and see how other Yalies voted!", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*3/8);
-        // ctx.fillText("Raise both hands for 5 seconds to start!", ctx.canvas.clientWidth*2.5/8, ctx.canvas.clientHeight*3.5/8);
-        // ctx.fillText("Want to skip voting and propose your own versus?", ctx.canvas.clientWidth/4, ctx.canvas.clientHeight*5/8);
-        // ctx.fillText("Raise your right hand only for 5 seconds!", ctx.canvas.clientWidth*6/20, ctx.canvas.clientHeight*5.5/8);
         ctx.fillText("Max players: 1", ctx.canvas.clientWidth*8.5/20, ctx.canvas.clientHeight*6/8);
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText("Option 1 VS Option 2", ctx.canvas.clientWidth*7.8/20, ctx.canvas.clientHeight/10);
-
         ctx.beginPath();
 
       }

@@ -196,6 +196,9 @@
                 ctx.font = "25px Calibri";
                 ctx.fillText("Too many people raising their hand in front of the screen", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*7/8);
               }
+              else if (num_people_raised == 1) {
+                window.location.href = "score.html";
+              }
               else {
                 document.getElementById("too_many_people").innerHTML = "";
                 drawEnv(ctx, origin);

@@ -103,21 +103,23 @@
                     timer = Date.now();
                   }
                   RAISED = true;
+                  var time_left = (Date.now()/1000) - (Math.floor(timer/1000)); 
                   ctx.fillStyle = 'grey';
                   ctx.fillRect(0, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
                   ctx.arc(ctx.canvas.clientWidth/2, 200, 50,0, 2 * Math.PI); 
-                  console.log(ctx.canvas.clientWidth/2)
                   ctx.fillStyle = '#333333';
                   ctx.fillRect(ctx.canvas.clientWidth*2/5, 0, ctx.canvas.clientWidth/5, ctx.canvas.clientHeight/6);
 
                   ctx.font = "25px Calibri";
+                  time_left = 5 - Math.floor(time_left);
+                  if(time_left >=0){ctx.fillText(time_left.toString(), ctx.canvas.clientWidth/2, 200);}
                   ctx.fillText("Option 1", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4.5/8);
                   ctx.fillText("Option 2", ctx.canvas.clientWidth*7/10, ctx.canvas.clientHeight*4.5/8);
                   ctx.fillStyle = "#FFFFFF";
                   ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
                   // console.log((Date.now()/1000) - (Math.floor(timer/1000)) );
                   hand_raised = 1;
-                  var time_left = (Date.now()/1000) - (Math.floor(timer/1000)); 
+                  
                   $('.countdown').text(`${5 - Math.floor(time_left)} seconds left`); 
                   if((Date.now()/1000) - (Math.floor(timer/1000) ) >= 5){
                       // 5 Seconds elapsed 
@@ -151,12 +153,17 @@
                     timer = Date.now();
                   }
                   RAISED = true;
+                  var time_left = (Date.now()/1000) - (Math.floor(timer/1000)); 
                   ctx.fillStyle = 'grey';
+                  time_left = 5 - Math.floor(time_left);
                   ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
                   ctx.fillStyle = '#333333';
+                  ctx.arc(ctx.canvas.clientWidth/2, 200, 50,0, 2 * Math.PI); 
+                  
                   ctx.fillRect(ctx.canvas.clientWidth*2/5, 0, ctx.canvas.clientWidth/5, ctx.canvas.clientHeight/6);
 
                   ctx.font = "25px Calibri";
+                  if(time_left >=0){ctx.fillText(time_left.toString(), ctx.canvas.clientWidth/2, 200);}
                   ctx.fillText("Option 1", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4.5/8);
                   ctx.fillText("Option 2", ctx.canvas.clientWidth*7/10, ctx.canvas.clientHeight*4.5/8);
                   ctx.fillStyle = "#FFFFFF";

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
+        body {
+        background: hsl(212, 45%, 89%);
+        font-family: "outfit", sans-serif;
+        }
+        .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        }
+        .box {
+        box-shadow: 1px 0 3px hsl(212, 45%, 89%);
+        width: 300px;
+        height: 460px;
+        background-repeat: repeat;
+        background-size: cover;
+        background-color:hsl(0, 0%, 100%);
+        color:hsl(218, 44%, 22%);
+        border-radius: 20px;
+        padding: 10px;
+        }
+        .qrcode {
+        max-height: 290px;
+        border-radius: 15px;
+        }
+
+        h1 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-top: -10px;
+        }
+        h3 {
+        font-weight: 400;
+        font-size: 16px;
+        color: hsl(220, 15%, 55%);
+        }
+
+        .attribution {
+            font-size: 11px;
+        text-align: center;
+        }
+
+        .texts {
+        padding: 1rem 1rem;
+        }
+
+        a {
+        color: hsl(220, 15%, 55%);
+        text-decoration: none;
+        }
+
+        a:hover {
+        color: black;
+        }
+    </style>
+  </head>
+<body>
+  <main class="container">
+    <div class="box">
+    <img class="qrcode" src="frame.png" />
+    <div class="texts">
+      <h1>Scan this to suggest new poll ideas </h1>
+      <h3>Raise your hand when you are done</h3>
+      </div>
+      </div>
+  </main>
+   
+</body>
+
+</html>

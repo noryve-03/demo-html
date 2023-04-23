@@ -66,24 +66,10 @@
               ctx.clearRect(0, 0, c.width, c.height);
               var num_people = Object.keys(data.people).length;
               $('.people_counter').text(`I see ${num_people} people`);
-              // if (num_people > 1){
-              //   document.getElementById("errors").innerHTML = "Please only one player in front of the screen";
-              // }
-              //console.log(num_people);
               for (const [idx, person] of Object.entries(data.people)) {
                 var hand_raised = 0;
-                // we want the data on the x,z plane from the camera's frame, so use indicies and 0 (x), 2 (Z)
-                // see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#arcs
-                // function definition is: arc(x, y, radius, startAngle, endAngle, counterclockwise)
                 ctx.strokeStyle = ctx.fillStyle = colors[i++];
                 ctx.beginPath();
-                // Code to detect where the person is, relative to the middle of the display 
-                // const POSITIONS = {
-                //   LEFT : "left",
-                //   RIGHT: "right"
-                // }
-
-                
                 // If a person is raising both hands, give error message to raise only one hand
                 if (person.joints[7].position.y <= person.joints[28].position.y && person.joints[14].position.y <= person.joints[30].position.y) {
                   document.getElementById("too_many_hands").innerHTML = "Please raise only one hand";
@@ -92,14 +78,10 @@
                   ctx.fillText("Please raise only one hand", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*7/8);
                 }
                 // If only person's left hand is raised above left eye, shade left side grey
-                else if (person.joints[7].position.y <= person.joints[28].position.y && person.joints[14].position.y > person.joints[30].position.y) { 
+                if (person.joints[7].position.y <= person.joints[28].position.y && person.joints[14].position.y > person.joints[30].position.y) {
                   // Here, the person is standing on the left 
-                  POSITION = "left" ;
-                  // if(num_people_raised == 0){
-                  //   RAISED = false 
-                  // }
-                  if(RAISED == false){
-                    // FIrst occurence of this happening 
+                  POSITION = "left";
+                  if (RAISED == false) {
                     timer = Date.now();
                   }
                   RAISED = true;
@@ -117,11 +99,8 @@
                   ctx.fillText("Option 2", ctx.canvas.clientWidth*7/10, ctx.canvas.clientHeight*4.5/8);
                   ctx.fillStyle = "#FFFFFF";
                   ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
-                  // console.log((Date.now()/1000) - (Math.floor(timer/1000)) );
                   hand_raised = 1;
-                  
-                  $('.countdown').text(`${5 - Math.floor(time_left)} seconds left`); 
-                  if((Date.now()/1000) - (Math.floor(timer/1000) ) >= 5){
+                  if ((Date.now()/1000) - (Math.floor(timer/1000) ) >= 5) {
                       // 5 Seconds elapsed 
                       console.log("5 seconds");
                   $('.countdown').text("Done!");
@@ -140,18 +119,11 @@
                   localStorage.setItem("value1", ct1.toString());
                   window.location.href = "score.html";
                   }
-                  
-                  // startCountdown(5);
-                  document.getElementById("too_many_hands").innerHTML = "";
                 } 
                 // Else if only person's right hand is raised above right eye, shade right side grey
                 else if (person.joints[14].position.y <= person.joints[30].position.y && person.joints[7].position.y > person.joints[28].position.y) {
                   POSITION = "right"; 
-                  // if(num_people_raised == 0){
-                  //   RAISED = false 
-                  // }
-                  if(RAISED == false){
-                    // FIrst occurence of this happening 
+                  if (RAISED == false){
                     timer = Date.now();
                   }
                   RAISED = true;
@@ -171,8 +143,7 @@
                   ctx.fillStyle = "#FFFFFF";
                   ctx.fillText("Upvote!", ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/10);
                   hand_raised = 1;
-                  // console.log((Date.now()/1000) - (Math.floor(timer/1000)) );
-                  if((Date.now()/1000) - (Math.floor(timer/1000) ) >= 5){
+                  if ((Date.now()/1000) - (Math.floor(timer/1000) ) >= 5) {
                       // 5 Seconds elapsed 
                       console.log("5 seconds");
                   ctx.fillStyle = 'green';
@@ -189,21 +160,20 @@
                     ct2++;
                     localStorage.setItem("value2", ct2.toString());
                     window.location.href = "score.html";
-                  document.getElementById("too_many_hands").innerHTML = "";
+                  }
                 }
-                }
-                // $('.people_counter').text(`The person is at the ${POSITION} of the screen`);
                 num_people_raised += hand_raised;
               }
-              if (num_people_raised > 1){
+              if (num_people_raised == 0) {
+                drawEnv(ctx, origin);
+                RAISED = false;
+              }
+              else if (num_people_raised > 1) {
                 document.getElementById("too_many_people").innerHTML = "Please only one player raising their hand in front of the screen";
                
                 ctx.fillStyle = 'red';
                 ctx.font = "25px Calibri";
                 ctx.fillText("Too many people raising their hand in front of the screen", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*7/8);
-              }
-              else if (num_people_raised == 1) {
-                window.location.href = "score.html";
               }
               else {
                 document.getElementById("too_many_people").innerHTML = "";
@@ -240,28 +210,6 @@
 
 
       // Helper Functions
-
-      // Countdown
-      // function startCountdown(seconds) {
-      //   let counter = seconds;
-      //   ctx.fillText(counter, ctx.canvas.clientWidth*9.2/20, ctx.canvas.clientHeight/2);
-          
-      //   const interval = setInterval(() => {
-      //     console.log(counter);
-      //     counter--;
-
-      //     if (counter < 0 ) {
-      //       clearInterval(interval);
-      //     }
-      //   }, 1000);
-      // }
-
-      //
-
-      // Convert MM to CM
-      // function toCM(mm) {
-      //   return mm/10;
-      // }
 
       // Setup an array of colors
       var tc = tinycolor({

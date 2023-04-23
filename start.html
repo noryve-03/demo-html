@@ -54,6 +54,10 @@
             ctx.clearRect(0, 0, c.width, c.height);
 
             // draw the camera on the top of the screen
+            if (localStorage.getItem("value1") === null && localStorage.getItem("value2") === null) {
+              localStorage.setItem("value1", 0);
+              localStorage.setItem("value2", 0);
+            }
             drawEnv(ctx, origin);
 
             if (data.people) {
@@ -88,6 +92,9 @@
                 ctx.fillStyle = 'red';
                 ctx.font = "25px Calibri";
                 ctx.fillText("Too many people raising their hands in front of the screen", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*7/8);
+              }
+              else if (num_people_raised == 1) {
+                window.location.href = "index.html";
               }
               else {
                 document.getElementById("too_many_people").innerHTML = "";

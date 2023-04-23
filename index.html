@@ -94,6 +94,9 @@
                 else if (person.joints[7].position.y <= person.joints[28].position.y && person.joints[14].position.y > person.joints[30].position.y) { 
                   // Here, the person is standing on the left 
                   // POSITION = "left" ;
+                  var ct1 = parseInt(localStorage.getItem("value1"));
+                  ct1++;
+                  localStorage.setItem("value1", ct1.toString());
                   ctx.fillStyle = 'grey';
                   ctx.fillRect(0, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
                   
@@ -107,6 +110,9 @@
                 // Else if only person's right hand is raised above right eye, shade right side grey
                 else if (person.joints[14].position.y <= person.joints[30].position.y && person.joints[7].position.y > person.joints[28].position.y) {
                   // POSITION = "right"; 
+                  var ct2 = parseInt(localStorage.getItem("value2"));
+                  ct2++;
+                  localStorage.setItem("value2", ct2.toString());
                   ctx.fillStyle = 'grey';
                   ctx.fillRect(ctx.canvas.clientWidth/2, 0, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight);
                   
@@ -126,6 +132,9 @@
                 ctx.fillStyle = 'red';
                 ctx.font = "25px Calibri";
                 ctx.fillText("Too many people raising their hand in front of the screen", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*7/8);
+              }
+              else if (num_people_raised == 1) {
+                window.location.href = "score.html";
               }
               else {
                 document.getElementById("too_many_people").innerHTML = "";

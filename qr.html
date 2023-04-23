@@ -100,9 +100,6 @@
         // canvas object
         var c = document.getElementById("draw");
         var ctx = c.getContext("2d");
-        // all real-world units are in mm unless denoted by CM
-        var personRadiusCM = 30;
-        // origin (x,y)
         var origin = [c.width/2, 0];
 
         // subscribe to the /frames data
@@ -119,13 +116,6 @@
             var num_people = Object.keys(data.people).length;
             $('.people_counter').text(`I see ${num_people} people`);
             
-            // for (const [idx, person] of Object.entries(data.people)) {
-            //   // we want the data on the x,z plane from the camera's frame, so use indicies and 0 (x), 2 (Z)
-            //   // see: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#arcs
-            //   // function definition is: arc(x, y, radius, startAngle, endAngle, counterclockwise)
-            //   ctx.strokeStyle = ctx.fillStyle = colors[i++];
-            //   ctx.beginPath();
-            // }
             if (num_people == 0){ //If no one in front of screen for 5 seconds, return to start page
               window.location.href = "start.html";
             }

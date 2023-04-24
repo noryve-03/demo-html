@@ -55,8 +55,8 @@
               localStorage.setItem("value1", 0);
               localStorage.setItem("value2", 0);
             }
-            localStorage.setItem("option1", "apples");
-            localStorage.setItem("option2", "oranges");
+            localStorage.setItem("option1", "Pepe's Pizza");
+            localStorage.setItem("option2", "Sally's Pizza");
             drawEnv(ctx, origin);
 
             if (data.people) {
@@ -75,7 +75,7 @@
                 num_people_raised += hand_raised;
               }
               if (num_people_raised == 1) {
-                window.location.href = "index.html";
+                window.location.href = "vote.html";
               }
               // else {
               //   document.getElementById("too_many_people").innerHTML = "";
@@ -129,16 +129,17 @@
 
         // Upvote box
         ctx.fillStyle = 'darkblue';
-        ctx.fillRect(ctx.canvas.clientWidth*3/8, 0, ctx.canvas.clientWidth/4, ctx.canvas.clientHeight/6);
+        ctx.fillRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight/6);
 
         // Instructions text
         ctx.fillStyle = '#333333';
         ctx.font = "25px Calibri";
-        ctx.fillText("Upvote one of the 2 options and see how other Yalies voted!", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4/8);
-        ctx.fillText("Raise both hands to start!", ctx.canvas.clientWidth*3/8, ctx.canvas.clientHeight*4.5/8);
-        ctx.fillText("Max players: 1", ctx.canvas.clientWidth*8.5/20, ctx.canvas.clientHeight*6/8);
+        ctx.textAlign = "center";
+        ctx.fillText("Upvote one of the 2 options and see how other Yalies voted!", ctx.canvas.clientWidth/2, ctx.canvas.clientHeight*4/8);
+        ctx.fillText("Raise both hands to start!", ctx.canvas.clientWidth/2, ctx.canvas.clientHeight*4.5/8);
+        ctx.fillText("Max players: 1", ctx.canvas.clientWidth/2, ctx.canvas.clientHeight*6/8);
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillText("Option 1 VS Option 2", ctx.canvas.clientWidth*7.8/20, ctx.canvas.clientHeight/10);
+        ctx.fillText(`${localStorage.getItem("option1")} VS ${localStorage.getItem("option2")}`, ctx.canvas.clientWidth/2, ctx.canvas.clientHeight/10); 
         ctx.beginPath();
 
       }

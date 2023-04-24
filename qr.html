@@ -174,11 +174,11 @@
       QRImage.src = "frame.png";
       ctx.drawImage(QRImage, ctx.canvas.clientWidth*3.55/10, ctx.canvas.clientHeight*2/8, 250, 250);
 
-      // Instructions text
-      ctx.fillStyle = '#333333';
+      // Exit Instructions text
+      ctx.fillStyle = 'red';
       ctx.font = "25px Calibri";
-      ctx.fillText("To end the game, step out of frame for 5 seconds", ctx.canvas.clientWidth*2/8, ctx.canvas.clientHeight*7.5/8);
-                    
+      ctx.fillText("To end the game, step out of frame", ctx.canvas.clientWidth*3/10, ctx.canvas.clientHeight*7.5/8);
+
       ctx.fillStyle = "#FFFFFF";
       ctx.fillText("Propose your own Versus!", ctx.canvas.clientWidth*7/20, ctx.canvas.clientHeight/10);
 

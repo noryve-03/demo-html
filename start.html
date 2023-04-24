@@ -43,9 +43,6 @@
           var ctx = c.getContext("2d");
           var origin = [c.width/2, 0];
 
-          var request = require('request');
-          var cheerio = require('cheerio');
-
           // subscribe to the /frames data
           frames.socket = new WebSocket(url);
           frames.socket.onmessage = function(event) {

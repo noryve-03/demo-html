@@ -43,6 +43,9 @@
           var ctx = c.getContext("2d");
           var origin = [c.width/2, 0];
 
+          var request = require('request');
+          var cheerio = require('cheerio');
+
           // subscribe to the /frames data
           frames.socket = new WebSocket(url);
           frames.socket.onmessage = function(event) {
@@ -55,6 +58,8 @@
               localStorage.setItem("value1", 0);
               localStorage.setItem("value2", 0);
             }
+            localStorage.setItem("option1", "apples");
+            localStorage.setItem("option2", "oranges");
             drawEnv(ctx, origin);
 
             if (data.people) {
@@ -133,7 +138,7 @@
         ctx.fillStyle = '#333333';
         ctx.font = "25px Calibri";
         ctx.fillText("Upvote one of the 2 options and see how other Yalies voted!", ctx.canvas.clientWidth/5, ctx.canvas.clientHeight*4/8);
-        ctx.fillText("Raise both hands for 5 seconds to start!", ctx.canvas.clientWidth*2.5/8, ctx.canvas.clientHeight*4.5/8);
+        ctx.fillText("Raise both hands to start!", ctx.canvas.clientWidth*3/8, ctx.canvas.clientHeight*4.5/8);
         ctx.fillText("Max players: 1", ctx.canvas.clientWidth*8.5/20, ctx.canvas.clientHeight*6/8);
         ctx.fillStyle = "#FFFFFF";
         ctx.fillText("Option 1 VS Option 2", ctx.canvas.clientWidth*7.8/20, ctx.canvas.clientHeight/10);

@@ -163,13 +163,16 @@
     function drawEnv(ctx, origin) {
       ctx.strokeStyle = "#333333";
 
+      // Background
+      let BgImage = new Image();
+      BgImage.src = "qrbg.png";
+      ctx.drawImage(BgImage, 0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+
       // Upvote box
       ctx.fillStyle = 'darkblue';
       ctx.fillRect(ctx.canvas.clientWidth*2.5/8, 0, ctx.canvas.clientWidth/3, ctx.canvas.clientHeight/6);
 
       // QR code image
-      ctx.fillStyle = 'lightblue';
-      ctx.fillRect(ctx.canvas.clientWidth*3.3/10, ctx.canvas.clientHeight*1.6/8, 300, 300);
       let QRImage = new Image();
       QRImage.src = "frame.png";
       ctx.drawImage(QRImage, ctx.canvas.clientWidth*3.55/10, ctx.canvas.clientHeight*2/8, 250, 250);

@@ -77,9 +77,9 @@
               if (num_people_raised == 1) {
                 window.location.href = "qr.html";
               }
-              else {
-                drawEnv(ctx, origin);
-              }
+              // else {
+              //   drawEnv(ctx, origin);
+              // }
             }
             num_people_raised = 0;
           }
@@ -134,34 +134,41 @@
 
         ctx.font = "40px Calibri";
         ctx.fillStyle = "#67b6c7";
-        ctx.fillRect(width/5, height - Math.round((barHeight * values[0]) / sum), barSize, Math.round((barHeight * values[0]) / sum));
-        ctx.fillText(values[0], width*3/10, 19*height/20 - Math.round((barHeight * values[0]) / sum));
+        ctx.fillRect(width*2.3/10, height - Math.round((barHeight * values[0]) / sum), barSize, Math.round((barHeight * values[0]) / sum));
+        ctx.fillText(values[0], width*3.6/10, 19*height/20 - Math.round((barHeight * values[0]) / sum));
 
         ctx.fillStyle = "#013220";
-        ctx.fillRect(width/2, height - Math.round((barHeight * values[1]) / sum), barSize, Math.round((barHeight * values[1]) / sum));
-        ctx.fillText(values[1], width*3/5, 19*height/20 - Math.round((barHeight * values[1]) / sum));
+        ctx.fillRect(width*5.2/10, height - Math.round((barHeight * values[1]) / sum), barSize, Math.round((barHeight * values[1]) / sum));
+        ctx.fillText(values[1], width*3.2/5, 19*height/20 - Math.round((barHeight * values[1]) / sum));
 
         ctx.font = "30px Calibri";
         if (values[1] > values[0]) {
           ctx.fillStyle = "#013220";
-          ctx.fillText(localStorage.getItem("option2") + " is in the lead!", width/3, height*1.5/5);
+          ctx.fillText(localStorage.getItem("option2") + " is in the lead!", ctx.canvas.clientWidth/2, height*1.5/5);
         }
         else if (values[1] < values[0]) {
           ctx.fillStyle = "#67b6c7";
-          ctx.fillText(localStorage.getItem("option1") + " is in the lead!", width/3, height*1.5/5);
+          ctx.fillText(localStorage.getItem("option1") + " is in the lead!", ctx.canvas.clientWidth/2, height*1.5/5);
         }
         else {
           ctx.fillStyle = "#FF0000";
-          ctx.fillText("It's a tie!", width/3, height*1.5/5);
+          ctx.fillText("It's a tie!", ctx.canvas.clientWidth/2, height*1.5/5);
         }
         ctx.font = "20px Calibri";
         ctx.fillStyle = "#000000"
-        ctx.fillText("Raise both hands to move to the next slide...", width*6/10, height/15);
+        ctx.fillText("Raise both hands to move to the next slide...", width*8/10, height/15);
       }
 
       // Draw the environment
       function drawEnv(ctx, origin) {
         ctx.strokeStyle = "#333333";
+
+        // Background
+        let BgImage = new Image();
+        BgImage.src = "scorebg.png";
+        ctx.drawImage(BgImage, 0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
+
+        ctx.textAlign = "center";
       }
     </script>
   </body>

@@ -37,6 +37,7 @@
 
         start: function() {
           var url = "ws://" + host + "/frames";
+          // localStorage.clear();
 
           // canvas object
           var c = document.getElementById("draw");
@@ -126,6 +127,11 @@
         // Draw the environment
       function drawEnv(ctx, origin) {
         ctx.strokeStyle = "#333333";
+
+        // Background
+        let BgImage = new Image();
+        BgImage.src = "startbg.png";
+        ctx.drawImage(BgImage, 0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
 
         // Upvote box
         ctx.fillStyle = 'darkblue';

@@ -14,7 +14,7 @@ Versus is a game that displays a poll between two options, and the user can choo
 ## Tasks the installation addresses:
 Users can engage in non-taxing physical activity
 Users are required to raise their hands (in some cases, for a duration of 5 seconds) to move on to the next slides or make their choice and move out of the frame to end the game. 
-Users can engage with other students by making their own responses through a QR code and google form, as well as seeing how others responded on a scoreboard.
+Users can engage with other students by making their own responses through a google form, as well as seeing how others responded on a scoreboard.
 
 Constraints from the deployment environment:
 Our game ends/exits when the user leaves the frame, so users should stand relatively close to the screen if they want to play. 

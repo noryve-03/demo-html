@@ -23,6 +23,6 @@ Our game ends/exits when the user leaves the frame, so users should stand relati
 
 Freeman Irabaruta (fni2): Created the forked GH repository; implemented the counter function; Created the initial version of the google form page and created the google form; tested various user prototypes over the past week.  
 
-Annette Lee (adl55): Implemented the start.html, new gf.html, and vote.html pages. Created the logic for counting the number of hands raised in front of the screen (ex: multiple people’s hands raised, more than one hand raised) and displayed the corresponding error messages. Helped with the updated google form and UI. Tested various user prototypes.
+Annette Lee (adl55): Implemented the start.html, new qr.html, and vote.html pages. Created the logic for counting the number of hands raised in front of the screen (ex: multiple people’s hands raised, more than one hand raised) and displayed the corresponding error messages. Helped with the updated google form and UI. Tested various user prototypes.
 
 Seema Patil (skp42): Added localStorage variables in order to be able to pass down voting tally data from one html page to another and coded the updating of these values, updated google form, helped with timer bugs, implemented switching between html pages, implemented score.html (bar chart and text display). Tested various user prototypes.

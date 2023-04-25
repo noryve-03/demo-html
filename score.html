@@ -6,7 +6,7 @@
   </head>
   <body>
     <div style="width:100%; text-align:center;">
-      <canvas id="draw" height="720" width="1280" style="border: 1px solid #111111; margin: auto"/>
+      <canvas id="draw" height="1280" width="1920" style="border: 1px solid #111111; margin: auto"/>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.4.1/tinycolor.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
@@ -92,7 +92,7 @@
         var barSize = ctx.canvas.clientWidth / 4;
         var sum = values[0] + values[1];
 
-        ctx.font = "40px Calibri";
+        ctx.font = "60px Calibri";
         ctx.fillStyle = "#67b6c7";
         ctx.fillRect(width*2.3/10, height - Math.round((barHeight * values[0]) / sum), barSize, Math.round((barHeight * values[0]) / sum));
         ctx.fillText(values[0], width*3.6/10, 19*height/20 - Math.round((barHeight * values[0]) / sum));
@@ -101,22 +101,22 @@
         ctx.fillRect(width*5.2/10, height - Math.round((barHeight * values[1]) / sum), barSize, Math.round((barHeight * values[1]) / sum));
         ctx.fillText(values[1], width*3.2/5, 19*height/20 - Math.round((barHeight * values[1]) / sum));
 
-        ctx.font = "30px Calibri";
+        ctx.font = "60px Calibri";
         if (values[1] > values[0]) {
           ctx.fillStyle = "#013220";
-          ctx.fillText(localStorage.getItem("option2") + " is in the lead!", ctx.canvas.clientWidth/2, height*1.5/5);
+          ctx.fillText(localStorage.getItem("option2") + " is ahead of " + localStorage.getItem("option1") + "!", ctx.canvas.clientWidth/2, height*1.5/5);
         }
         else if (values[1] < values[0]) {
           ctx.fillStyle = "#67b6c7";
-          ctx.fillText(localStorage.getItem("option1") + " is in the lead!", ctx.canvas.clientWidth/2, height*1.5/5);
+          ctx.fillText(localStorage.getItem("option1") + " is ahead of " + localStorage.getItem("option2") + "!", ctx.canvas.clientWidth/2, height*1.5/5);
         }
         else {
           ctx.fillStyle = "#FF0000";
-          ctx.fillText("It's a tie!", ctx.canvas.clientWidth/2, height*1.5/5);
+          ctx.fillText(localStorage.getItem("option1") + " and " + localStorage.getItem("option2") + " are tied!", ctx.canvas.clientWidth/2, height*1.5/5);
         }
-        ctx.font = "20px Calibri";
+        ctx.font = "50px Calibri";
         ctx.fillStyle = "#000000"
-        ctx.fillText("Raise both hands to move to the next slide...", width*8/10, height/15);
+        ctx.fillText("Raise both hands to move to the next slide...", width*7.3/10, height/15);
       }
 
       // Draw the environment

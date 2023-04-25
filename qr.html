@@ -68,7 +68,7 @@
 
       // Background
       let BgImage = new Image();
-      BgImage.src = "qrbg.png";
+      BgImage.src = "./qrbg.png";
       ctx.drawImage(BgImage, 0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
 
       // Upvote box
@@ -77,7 +77,7 @@
 
       // QR code image
       let QRImage = new Image();
-      QRImage.src = "frame.png";
+      QRImage.src = "./frame.png";
       ctx.drawImage(QRImage, ctx.canvas.clientWidth*3.4/10, ctx.canvas.clientHeight*2/8, 600, 600);
 
       // Exit Instructions text

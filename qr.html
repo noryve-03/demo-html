@@ -75,10 +75,11 @@
       ctx.fillStyle = 'darkblue';
       ctx.fillRect(ctx.canvas.clientWidth*2.5/8, 0, ctx.canvas.clientWidth*3.7/10, ctx.canvas.clientHeight/6);
 
-      // QR code image
-      let QRImage = new Image();
-      QRImage.src = "./frame.png";
-      ctx.drawImage(QRImage, ctx.canvas.clientWidth*3.4/10, ctx.canvas.clientHeight*2/8, 600, 600);
+      // Google Form
+      ctx.fillText("Google Form link: t.ly/Ud86", ctx.canvas.clientWidth/2, ctx.canvas.clientHeight/2);
+      // let QRImage = new Image();
+      // QRImage.src = "./frame.png";
+      // ctx.drawImage(QRImage, ctx.canvas.clientWidth*3.4/10, ctx.canvas.clientHeight*2/8, 600, 600);
 
       // Exit Instructions text
       ctx.textAlign = "center";
